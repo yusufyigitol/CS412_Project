@@ -28,5 +28,5 @@ The scripts for each round are organized to follow a step-by-step process. Outpu
 
 ## Conclusion
 
-This project demonstrates how step-by-step improvements in models and features can enhance performance. Starting with simple approaches and slowly adopting advanced techniques allowed solving the classification and regression tasks effectively.
+This project demonstrates how step-by-step improvements in models and features can enhance performance. Starting with simple approaches and slowly adopting advanced techniques have allowed the classification and regression tasks to be solved effectively.
 
