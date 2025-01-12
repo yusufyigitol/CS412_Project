@@ -1,6 +1,6 @@
 # Machine Learning Course Project: Instagram Influencers
 
-### Created by: Yusuf Yiğitol- 00022475
+### Created by: Yusuf Yiğitol
 
 ---
 
