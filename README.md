@@ -22,7 +22,7 @@ In **Round 3**, I shifted to Logistic Regression for classification, using grid 
 
 ## How to Run
 
-The scripts for each round are organized to follow a step-by-step process. Before running the scripts, ensure that the data files required for training the models are placed in the correct directories on your local machine. Finally, outputs for both classification and regression tasks are provided in the sucourse submission.
+The scripts for each round are organized to follow a step-by-step process. Before running the scripts, ensure that the data files required for training the models are placed in the correct directories on your local machine and that related paths in the notebooks are adjusted accordingly. Finally, outputs for both classification and regression tasks are provided in the sucourse submission.
 
 ---
 
