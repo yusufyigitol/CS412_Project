@@ -1,1 +1,2 @@
-# CS412_Project
+# Machine Learning Course Project: Instagram Influencers
+
