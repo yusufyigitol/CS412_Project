@@ -25,7 +25,6 @@ import os
 nltk.download('stopwords')
 turkish_stopwords = stopwords.words('turkish')
 
-# Mount Google Drive if using Colab
 try:
     from google.colab import drive
     drive.mount('/content/drive')
@@ -33,13 +32,11 @@ try:
 except ImportError:
     base_path = "./"
 
-# Paths to datasets
 train_classification_path = os.path.join(base_path, "train-classification.csv")
 train_data_path = os.path.join(base_path, "training-dataset.jsonl.gz")
 test_classification_path = os.path.join(base_path, "test-classification-round1.dat")
 test_regression_path = os.path.join(base_path, "test-regression-round1.jsonl")
 
-# Load Classification Dataset
 train_classification_df = pd.read_csv(train_classification_path)
 train_classification_df = train_classification_df.rename(columns={'Unnamed: 0': 'user_id', 'label': 'category'})
 train_classification_df["category"] = train_classification_df["category"].apply(str.lower)
@@ -48,7 +45,6 @@ username2_category = train_classification_df.set_index("user_id").to_dict()["cat
 # Stats about labels
 print(train_classification_df.groupby("category").count())
 
-# Load Training Data
 username2posts_train = dict()
 username2profile_train = dict()
 username2posts_test = dict()
@@ -66,13 +62,11 @@ with gzip.open(train_data_path, "rt") as fh:
             username2posts_test[username] = sample["posts"]
             username2profile_test[username] = profile
 
-# Convert Profiles to DataFrame
 train_profile_df = pd.DataFrame(username2profile_train).T.reset_index(drop=True)
 test_profile_df = pd.DataFrame(username2profile_test).T.reset_index(drop=True)
 print("Training profiles shape:", train_profile_df.shape)
 print("Test profiles shape:", test_profile_df.shape)
 
-# Text Preprocessing
 def preprocess_text(text: str):
     text = text.casefold()
     text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)
@@ -171,10 +165,8 @@ output_regression_path = os.path.join(base_path, "prediction-regression-round1.j
 with open(test_regression_path, "r") as fh:
     for line in fh:
         try:
-            # Parse the JSON line
             sample = json.loads(line.strip())  # Each line should be a dictionary
 
-            # Check for required keys
             if isinstance(sample, dict) and "username" in sample:
                 predicted_like = predict_like_count(sample["username"])
                 sample["like_count"] = int(predicted_like)
