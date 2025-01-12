@@ -19,11 +19,9 @@ from sklearn.model_selection import train_test_split
 import re
 import os
 
-# Download Turkish Stopwords
 nltk.download('stopwords')
 turkish_stopwords = stopwords.words('turkish')
 
-# Mount Google Drive if using Colab
 try:
     from google.colab import drive
     drive.mount('/content/drive')
@@ -64,7 +62,6 @@ with gzip.open(train_data_path, "rt") as fh:
             username2posts_test[username] = sample["posts"]
             username2profile_test[username] = profile
 
-# Convert Profiles to DataFrame
 train_profile_df = pd.DataFrame(username2profile_train).T.reset_index(drop=True)
 test_profile_df = pd.DataFrame(username2profile_test).T.reset_index(drop=True)
 print("Training profiles shape:", train_profile_df.shape)
@@ -124,7 +121,6 @@ from sklearn.model_selection import GridSearchCV
 model = LogisticRegression(max_iter=1000, class_weight="balanced")
 scores = cross_val_score(model, x_post_train, y_train, cv=5, scoring='accuracy')
 
-# Print Cross-Validation Results
 print("Cross-Validation Accuracy Scores:", scores)
 print("Mean Accuracy:", scores.mean())
 
@@ -136,7 +132,6 @@ grid.fit(x_post_train, y_train)
 model = grid.best_estimator_
 print("Best Parameters:", grid.best_params_)
 
-# Fit the model on the full training data
 model.fit(x_post_train, y_train)
 
 # Predict Test Data
@@ -202,7 +197,6 @@ param_distributions = {
     "learning_rate": [0.01, 0.1],
 }
 
-# RandomizedSearchCV
 random_search = RandomizedSearchCV(
     GradientBoostingRegressor(random_state=42),
     param_distributions=param_distributions,
@@ -232,12 +226,11 @@ with open(test_regression_path, "r") as fh:
             if "username" in sample and sample["username"] in test_usernames:
                 username = sample["username"]
 
-                # Compute features for the username
                 if username in test_usernames:
                     try:
                         feature_vector = x_post_test[test_usernames.index(username)].toarray()[0]
 
-                        # Add additional features for prediction
+                        # Additional features for prediction
                         avg_like = sum(post.get("like_count", 0) or 0 for post in username2posts_test[username]) / len(
                             username2posts_test[username]
                         ) if username2posts_test[username] else 0
@@ -246,10 +239,9 @@ with open(test_regression_path, "r") as fh:
                             [len(post["caption"]) if post.get("caption") else 0 for post in username2posts_test[username]]
                         ) if username2posts_test[username] else 0
 
-                        # Combine features for prediction
+                        # Combined features for prediction
                         combined_features = np.concatenate(([avg_like, total_likes, avg_caption_length], feature_vector))
 
-                        # Predict like count
                         predicted_like = best_regressor.predict([combined_features])[0]
                         sample["like_count"] = max(0, int(predicted_like))
                     except Exception as e:
