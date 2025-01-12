@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project was part of the CS412 Machine Learning course and aimed to classify Instagram accounts into categories and predict post interactions. Over three rounds, I improved the pipeline by refining feature extraction, testing different machine learning models, and enhancing regression predictions.
+This project was part of the CS412 Machine Learning course and aimed to classify Instagram accounts into categories and predict post interactions. Over three rounds, I improved the pipeline by refining feature extraction, testing different machine learning models, and enhancing classification and regression predictions.
 
 ---
 
